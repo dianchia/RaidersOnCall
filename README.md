@@ -1,15 +1,30 @@
-# About
+# Mod Information
 
-A starter project to help save time when creating a new mod. The project structure tries to follow the official Necesse as much as possible, without becoming redundant. Folders have mostly only been provided for examples, but where new things would go should hopefully make sense. 
+Mod version: 1.0.0
 
-The mod also includes register methods for **most** things you'd want to register, ordered as recommended by the Necesse developer. It is recommended to register things exclusively in the created registrars.
+Game version: 0.21.23
 
-You can find [community documentation and guides here](https://necesse-community.github.io/unofficial-docs/#/)
+# Raiders On Call
 
-You can find [the official WIKI page here](https://necessewiki.com/Modding)
+Hey you, you think your base is strong?
+You think your defense system is perfect?
+If so, how bout' we pay a visit tonight?
 
-# Setup Info
-1. Make sure you rename `ChangeThisName` to a unique name for your mod. If not, you will conflict with other mods using this starter
-2. Rename the project in `settings.gradle`
-3. Update the `mod info`  in `build.gradle
-4. Change the `build.gradle` gameDirectory to your Necesse game directory
+-- Raiders -- 
+
+## Multiplayer
+
+This mod is required on both server and client.
+
+## Important Notes:
+
+- Raids can only be summoned at night
+- Nothing important actually...
+
+## GitHub
+
+Bugs can be reported to [here](https://github.com/dianchia/RaidersOnCall/issues)
+
+## Collection
+
+[Here](https://github.com/dianchia/Necesse-Mods) are a few mods I wrote
