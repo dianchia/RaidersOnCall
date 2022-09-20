@@ -25,7 +25,7 @@ public class SummonRaidScrollItem extends ConsumableItem {
 
         LocalMessage line2 = new LocalMessage("tooltip", "summonraidtooltip2");
         StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < tooltips.getWidth() - line2.translate().length(); i++) {
+        for (int i = 0; i < (tooltips.getWidth() / 6) - line2.translate().length(); i++) {
             builder.append(' ');
         }
         builder.append(line2.translate());
@@ -35,19 +35,19 @@ public class SummonRaidScrollItem extends ConsumableItem {
 
     @Override
     public InventoryItem onPlace(Level level, int x, int y, PlayerMob player, InventoryItem item, PacketReader contentReader) {
+        if (!level.isServerLevel()) return item;
+
         if (!level.getWorldEntity().isNight()) {
             level.getServer().network.sendToAllClients(new PacketChatMessage("Raid can only be summoned at night."));
             return item;
         }
 
-        if (!level.isServerLevel()) return item;
-
-        SettlementLevelData levelData = SettlementLevelData.getSettlementData(level);
-        if (levelData != null) {
-            item.setAmount(item.getAmount() - 1);
+        try{
+            SettlementLevelData levelData = SettlementLevelData.getSettlementData(level);
             level.getServer().network.sendToAllClients(new PacketChatMessage("Finally a worthy opponent! Our battle will be legendary!"));
             levelData.spawnRaid();
-        } else {
+            item.setAmount(item.getAmount() - 1);
+        } catch (NullPointerException ex){
             level.getServer().network.sendToAllClients(new PacketChatMessage("Unable to spawn raid!"));
             level.getServer().network.sendToAllClients(new PacketChatMessage("Either settlement is not found or number of settlers is lesser than 3."));
         }

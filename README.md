@@ -1,8 +1,8 @@
 # Mod Information
 
-Mod version: 1.0.0
+Mod version: 1.0.2
 
-Game version: 0.21.23
+Game version: 0.21.24
 
 # Raiders On Call
 
@@ -19,7 +19,12 @@ This mod is required on both server and client.
 ## Important Notes:
 
 - Raids can only be summoned at night
+- Left click while holding to use
 - Nothing important actually...
+
+## Update Notes:
+- v1.0.1 - Fixed tooltips
+- v1.0.2 - Updated game version to 0.21.24 and fixed game crash on item use
 
 ## GitHub
 
