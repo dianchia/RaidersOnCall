@@ -1,8 +1,8 @@
 # Mod Information
 
-Mod version: 1.0.4
+Mod version: 1.0.6
 
-Game version: 0.21.27
+Game version: 0.21.28
 
 # Raiders On Call
 
