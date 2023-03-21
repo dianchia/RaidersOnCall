@@ -1,8 +1,8 @@
 # Mod Information
 
-Mod version: 1.0.6
+Mod version: 1.0.7
 
-Game version: 0.21.28
+Game version: 0.21.29
 
 # Raiders On Call
 
@@ -27,6 +27,7 @@ This mod is required on both server and client.
 - v1.0.2 - Updated to game version 0.21.24 and fixed game crash on item use
 - v1.0.3 - Updated to game version 0.21.25
 - v1.0.4 - Updated to game version 0.21.27
+- v1.0.7 - Updated to game version 0.21.29
 
 ## GitHub
 
