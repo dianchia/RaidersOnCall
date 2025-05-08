@@ -5,13 +5,18 @@ import necesse.engine.localization.message.GameMessage;
 import necesse.engine.localization.message.GameMessageBuilder;
 import necesse.engine.localization.message.LocalMessage;
 import necesse.engine.network.PacketReader;
+import necesse.engine.network.gameNetworkData.GNDItemMap;
 import necesse.engine.network.packet.PacketChatMessage;
+import necesse.engine.util.GameBlackboard;
+import necesse.engine.util.GameRandom;
+import necesse.entity.levelEvent.settlementRaidEvent.SettlementRaidLevelEvent;
 import necesse.entity.mobs.PlayerMob;
 import necesse.gfx.gameTooltips.ListGameTooltips;
 import necesse.inventory.InventoryItem;
 import necesse.inventory.item.placeableItem.consumableItem.ConsumableItem;
 import necesse.level.maps.Level;
 import necesse.level.maps.levelData.settlementData.SettlementLevelData;
+import necesse.level.maps.levelData.settlementData.SettlementRaidOptions;
 
 public class SummonRaidScrollItem extends ConsumableItem {
     public SummonRaidScrollItem() {
@@ -19,8 +24,8 @@ public class SummonRaidScrollItem extends ConsumableItem {
     }
 
     @Override
-    public ListGameTooltips getTooltips(InventoryItem item, PlayerMob perspective) {
-        ListGameTooltips tooltips = super.getTooltips(item, perspective);
+    public ListGameTooltips getTooltips(InventoryItem item, PlayerMob perspective, GameBlackboard blackboard) {
+        ListGameTooltips tooltips = super.getTooltips(item, perspective, blackboard);
         tooltips.add(new LocalMessage("tooltip", "summonraidtooltip1"));
 
         LocalMessage line2 = new LocalMessage("tooltip", "summonraidtooltip2");
@@ -34,23 +39,34 @@ public class SummonRaidScrollItem extends ConsumableItem {
     }
 
     @Override
-    public InventoryItem onPlace(Level level, int x, int y, PlayerMob player, InventoryItem item, PacketReader contentReader) {
-        if (!level.isServerLevel()) return item;
+    public InventoryItem onPlace(Level level, int x, int y, PlayerMob player, int seed, InventoryItem item, GNDItemMap mapContent) {
+        if (!level.isServer()) return item;
 
         if (!level.getWorldEntity().isNight()) {
             level.getServer().network.sendToAllClients(new PacketChatMessage("Raid can only be summoned at night."));
             return item;
         }
 
-        try{
-            SettlementLevelData levelData = SettlementLevelData.getSettlementData(level);
-            level.getServer().network.sendToAllClients(new PacketChatMessage("Finally a worthy opponent! Our battle will be legendary!"));
-            levelData.spawnRaid();
-            item.setAmount(item.getAmount() - 1);
-        } catch (NullPointerException ex){
-            level.getServer().network.sendToAllClients(new PacketChatMessage("Unable to spawn raid!"));
-            level.getServer().network.sendToAllClients(new PacketChatMessage("Either settlement is not found or number of settlers is lesser than 3."));
+        SettlementLevelData settlementData = SettlementLevelData.getSettlementData(level);
+        if (settlementData == null) {
+            level.getServer().network.sendToAllClients(new PacketChatMessage("Settlement is not found."));
+            return item;
         }
+
+        if (settlementData.countTotalSettlers() < 3) {
+            level.getServer().network.sendToAllClients(new PacketChatMessage("Come find me when you have more than 3 settlers."));
+            return item;
+        }
+
+        level.getServer().network.sendToAllClients(new PacketChatMessage("Finally a worthy opponent! Our battle will be legendary!"));
+        item.setAmount(item.getAmount() - 1);
+
+        SettlementRaidOptions options = settlementData.getRaidOptions(false);
+        options.difficultyModifier = settlementData.getNextRaidDifficultyMod();
+        options.direction = GameRandom.globalRandom.getOneOf(SettlementRaidLevelEvent.RaidDir.values());
+        options.dontAutoAttackSettlement = false;
+        settlementData.spawnRaid(settlementData.getNextRaid(options), options);
+
         return item;
     }
 }
