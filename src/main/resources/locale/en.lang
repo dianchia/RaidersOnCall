@@ -4,3 +4,10 @@ summonraidscroll=Summon Raid Scroll
 [tooltip]
 summonraidtooltip1=See you tonight!
 summonraidtooltip2=- Raiders -
+
+[raidersoncall]
+cannotsummoninincursion=§#ED8796Cannot spawn raid in Incursion Level
+nosettlement=§#ED8796Ye landless scallywag! Raise a settlement from the muck afore ye squawk at me!
+notenoughsettlers=§#ED8796Three deckhands in yer whole settlement? Shiver me timbers, me longboat has a bigger crew! What a pathetic wretch!
+notsurface=§#ED8796Arrr, quit yer hidin'! How be we to find ye if ye're not showin' on surface?
+notnight=§#ED8796Yarrr, the crew'll be sleepin' with the fishes 'til night!

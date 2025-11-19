@@ -7,8 +7,8 @@ plugins {
 
 project.ext.modID = "dianchia.raidersoncall" // The unique id of your mod. Must be all lowercase and cannot use special characters.
 project.ext.modName = "Raiders On Call" // The display name of your mod.
-project.ext.modVersion = "1.0.8" // Your current builds version. Must follow the xx.xx... format.
-project.ext.gameVersion = "0.22.0" // The target game version.
+project.ext.modVersion = "1.0.9" // Your current builds version. Must follow the xx.xx... format.
+project.ext.gameVersion = "0.32.1" // The target game version.
 project.ext.modDescription = "Summon raids whenever you want!" // Short description of what your mod is.
 project.ext.author = "dianchia" // Your name
 
@@ -29,7 +29,6 @@ project.ext.clientside = false
 
 // The path to the games install directory
 def gameDirectory = "E:/SteamLibrary/steamapps/common/Necesse"
-
 // =================================================
 // ========== DO NOT EDIT BELOW THIS LINE ==========
 // =================================================
@@ -94,7 +93,7 @@ task runClient(type: JavaExec) {
 
     classpath = files(gameDirectory + "/Necesse.jar")
 
-    main = "StartClient"
+    main = "StartSteamClient"
     jvmArgs "-Xms512m", "-Xmx3G", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseG1GC", "-XX:G1NewSizePercent=20", "-XX:G1ReservePercent=20", "-XX:MaxGCPauseMillis=50", "-XX:G1HeapRegionSize=32M"
     args "-mod \"${buildLocation}\""
 }
@@ -106,7 +105,7 @@ task runDevClient(type: JavaExec) {
 
     classpath = files(gameDirectory + "/Necesse.jar")
 
-    main = "StartClient"
+    main = "StartSteamClient"
     jvmArgs "-Xms512m", "-Xmx3G", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseG1GC", "-XX:G1NewSizePercent=20", "-XX:G1ReservePercent=20", "-XX:MaxGCPauseMillis=50", "-XX:G1HeapRegionSize=32M"
     args "-dev 1", "-mod \"${buildLocation}\""
 }
@@ -118,7 +117,7 @@ task runServer(type: JavaExec) {
 
     classpath = files(gameDirectory + "/Server.jar")
 
-    main = "StartServer"
+    main = "StartDesktopServer"
     jvmArgs "-Xms512m", "-Xmx3G", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseG1GC", "-XX:G1NewSizePercent=20", "-XX:G1ReservePercent=20", "-XX:MaxGCPauseMillis=50", "-XX:G1HeapRegionSize=32M"
     args "-mod \"${buildLocation}\""
 }
